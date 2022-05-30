@@ -1,57 +1,37 @@
+
+
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:nft_app/views/screens/setting.dart';
+import 'package:nft_app/views/screens/deposit_history.dart';
+import 'package:nft_app/views/screens/withdraw_history.dart';
+// import 'package:settings_ui/settings_ui.dart';
 
-
-class newdrawerpage extends StatelessWidget {
-  const newdrawerpage({ Key? key }) : super(key: key);
+class Account extends StatefulWidget {
+  const Account({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return  drawer();
-  }
+  _AccountState createState() => _AccountState();
 }
 
-class drawer extends StatefulWidget {
-  const drawer({ Key? key }) : super(key: key);
- 
-
-  @override
-  State<drawer> createState() => _drawerState();
-}
-
-class _drawerState extends State<drawer> {
-   
-   
- 
-
-
+class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-   
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Column(children: [
-                   Row(
-              
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+      //    appBar: AppBar(title: Text("More"),
+      // centerTitle: true,
+      // backgroundColor: Color.fromARGB(255, 177, 19, 224),
+      
+      // ),
+         
+       body: SingleChildScrollView(
+         child: Column(children: [
+       
+               
                 
-                Container(
-                                 height: 170,
-                                width: 170,
-                                 
-                                  child: Image(image: AssetImage('images/logo.png',), fit: BoxFit.fill,),
-                               ),
-              ],
-            ),
-                    Divider(thickness: 1,color: Colors.grey),
                  ListTile(
                      tileColor: Colors.white,
                     title: Text('Referral-Invite',),
@@ -68,33 +48,39 @@ class _drawerState extends State<drawer> {
                     ),
                  
                   ),
-                  ListTile(
-                      tileColor: Colors.white,
-                    title: Text("Withdraw History"),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
+                  GestureDetector(
+                    onTap: (){Get.to(WithdrawHistory());},
+                    child: ListTile(
+                        tileColor: Colors.white,
+                      title: Text("Withdraw History"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
+                     
                     ),
-                   
                   ),
-                  ListTile(
-                      tileColor: Colors.white,
-                    title: Text('Deposit History'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
+                  GestureDetector(
+                     onTap: (){Get.to( DepositHistory());},
+                    child: ListTile(
+                        tileColor: Colors.white,
+                      title: Text('Deposit History'),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
+                      
                     ),
-                    
                   ),
                   ListTile(
                       tileColor: Colors.white,
@@ -111,37 +97,31 @@ class _drawerState extends State<drawer> {
                     
                   ),
                
-                 GestureDetector(
-             onTap: (){
-                     Get.to(Setting());
-             },
-                   child: ListTile(
-                       tileColor: Colors.white,
-                      title: Text('Settings'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            LineAwesomeIcons.angle_right,
-                            size: 16,
-                          )
-                        ],
-                      ),
-                     
-                    ),
-                 ),
-                  SizedBox(height: 10,),
-                 Card(
-                   color: Color.fromARGB(255, 177, 19, 224),
-                   elevation: 1,
-                   child:   ListTile(
-                     //tileColor: Color.fromARGB(255, 177, 19, 224),
-                    title: Text('Logout', style: TextStyle(color: Colors.white),),
+                 ListTile(
+                     tileColor: Colors.white,
+                    title: Text('Settings'),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          Icons.logout,color: Colors.white,
+                          LineAwesomeIcons.angle_right,
+                          size: 16,
+                        )
+                      ],
+                    ),
+                   
+                  ),
+                 Card(
+                   color: Colors.white,
+                   elevation: 1,
+                   child:   ListTile(
+                     tileColor: Colors.white,
+                    title: Text('Logout'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.logout,
                           size: 16,
                         )
                       ],
@@ -181,12 +161,15 @@ class _drawerState extends State<drawer> {
                 //     ],)
                 //   ),
                 // )
+                
               
-                        
-                  
-            ],),
-          ),
-        ),
+         ],),
+       ),
+        
+         
+           
+          
+        
       ),
     );
   }

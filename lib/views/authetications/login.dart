@@ -5,7 +5,8 @@ import 'package:nft_app/views/authetications/signup.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
 import 'package:get/get.dart';
 import 'package:nft_app/views/navigation_bar/navigation.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart' ;
 class Login extends StatefulWidget {
   const Login({ Key? key }) : super(key: key);
   
@@ -15,8 +16,78 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+         var email = "";
+  var password = "";
+  
 
     final _formKey = GlobalKey<FormState>();
+        TextEditingController usernamecontroller = TextEditingController();
+         TextEditingController passwordcontroller = TextEditingController();
+           @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+  usernamecontroller.dispose();
+   passwordcontroller.dispose();
+    super.dispose();
+  }
+    loginfun(String username, String password) async {
+   var request = http.MultipartRequest('POST', Uri.parse('https://mining-nfts.com/api/'));
+request.fields.addAll({
+  'auth': 'HSYE683H38S',
+  'login': '1',
+  'username': username,
+  'password': password
+});
+
+
+http.StreamedResponse response = await request.send();
+
+if (response.statusCode == 200) {
+  print(await response.stream.bytesToString()
+  
+  );
+    print("api is hit on login");
+     Get.snackbar(
+              "",
+               "", 
+               snackPosition: SnackPosition.BOTTOM,
+               backgroundColor: Colors.black,
+               borderRadius: 20,
+               margin: EdgeInsets.all(15),
+               colorText: Colors.green,
+               messageText: Text("Login successfully", style: TextStyle(color: Colors.white),),
+               duration: Duration(seconds: 4),
+               isDismissible: true,
+              
+               forwardAnimationCurve: Curves.easeOutBack,
+                 
+               );
+             
+               Get.to(  MaterialYou());
+}
+else {
+  print(response.reasonPhrase);
+   print("api not hit on login");
+   Get.snackbar(
+              "Wrong",
+               "", 
+               snackPosition: SnackPosition.BOTTOM,
+               backgroundColor: Colors.black,
+               borderRadius: 20,
+               margin: EdgeInsets.all(15),
+               colorText: Colors.red,
+               messageText: Text("Wrong credential", style: TextStyle(color: Colors.white),),
+               duration: Duration(seconds: 4),
+               isDismissible: true,
+              
+               forwardAnimationCurve: Curves.easeOutBack,
+                 
+               );
+  
+}
+
+
+   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,17 +130,17 @@ class _LoginState extends State<Login> {
                    padding: const EdgeInsets.only(left: 16,right: 16),
                    child: Column(children: [
                       Container(
-                        height: 50,
+                     
                         child:
                          TextFormField(
                           autofocus: false,
                           decoration: InputDecoration(
-                        hintText: "Email",
+                        hintText: "User name",
                         prefixIcon: Icon(Icons.email),
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -84,16 +155,14 @@ class _LoginState extends State<Login> {
                           
                         ),
                       ),
-                     // controller:controller. emailController,
+                      controller: usernamecontroller,
                      
                           
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Email';
-                            } else if (!value.contains('@')) {
-                              return 'Please Enter Valid Email';
-                            }
-                            return null;
+                              return 'Please Enter User Name';
+                            } 
+                            
                           },
                         ),
                       ),
@@ -101,7 +170,7 @@ class _LoginState extends State<Login> {
                          SizedBox(height: 18,),
                                
                               Container(
-                        height: 50,
+                     
                         child:
                          TextFormField(
                        autofocus: false,
@@ -112,7 +181,7 @@ class _LoginState extends State<Login> {
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -127,8 +196,8 @@ class _LoginState extends State<Login> {
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                       
+                        controller: passwordcontroller,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please Enter Password';
@@ -156,25 +225,19 @@ class _LoginState extends State<Login> {
                         ),
                     
                     onPressed: () {
-                  Get.to(MaterialYou());
+                //  Get.to(MaterialYou());
 
-                //             if (_formKey.currentState!.validate()) {
-                //               setState(() {
-                //            controller.email = controller.emailController.text;
-                //             controller.password = controller. passwordController.text;
-                //           //  email = emailController.text;
-                //           //   password = passwordController.text;
-                //               });
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                          
+                              });
                              
                               
-                              
-                //  controller.userLogin(context);
+        
                            
                                 
-                //             }
-                                    
-                          //   controller.emailController.clear();
-                          //  controller.passwordController.clear();
+                            }
+                            loginfun(usernamecontroller.text,passwordcontroller.text);
                          
                      
                     },

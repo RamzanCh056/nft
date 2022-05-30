@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
@@ -5,7 +6,8 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:get/instance_manager.dart';
 import 'package:nft_app/views/authetications/login.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart' ;
  
 
   class SignUp extends StatefulWidget {
@@ -25,10 +27,18 @@ import 'package:nft_app/views/authetications/login.dart';
   var username = "";
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
+   final usernamecontroller = TextEditingController();
   final emailController = TextEditingController();
+    final phonenumberController = TextEditingController();
+   final telegramController = TextEditingController();
+    final whatsappController = TextEditingController();
+      final pinController = TextEditingController();
+       final uplineController = TextEditingController();
+        
+   
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-   final usernamecontroller = TextEditingController();
+  
 
   @override
   void dispose() {
@@ -39,7 +49,7 @@ import 'package:nft_app/views/authetications/login.dart';
     usernamecontroller.dispose();
     super.dispose();
   }
-
+     
   
      
     @override
@@ -85,7 +95,7 @@ import 'package:nft_app/views/authetications/login.dart';
                    padding: const EdgeInsets.only(left: 16,right: 16),
                    child: Column(children: [
                       Container(
-                      height: 50,
+                    
                         child:
                          TextFormField(
                           autofocus: false,
@@ -95,50 +105,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                         // borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        
-                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                          
-                          
-                        ),
-                      ),
-                     // controller:controller. emailController,
-                     
-                          
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please Enter Email';
-                            } else if (!value.contains('@')) {
-                              return 'Please Enter Valid Email';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                   
-                         SizedBox(height: 18,),
-                               
-                              Container(
-                        height: 50,
-                        child:
-                         TextFormField(
-                       autofocus: false,
-                          
-                          decoration: InputDecoration(
-                      hintText: "Email",
-                        prefixIcon: Icon(Icons.email),
-                        hintStyle: TextStyle(color: Colors.grey),
-                         border: OutlineInputBorder(),
-                         errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -153,11 +120,51 @@ import 'package:nft_app/views/authetications/login.dart';
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                      controller:usernamecontroller,                     
+                          
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please Enter Name';
+                            } 
+                          },
+                        ),
+                      ),
+                   
+                         SizedBox(height: 18,),
+                               
+                              Container(
+                       
+                        child:
+                         TextFormField(
+                       autofocus: false,
+                          
+                          decoration: InputDecoration(
+                      hintText: "Email",
+                        prefixIcon: Icon(Icons.email),
+                        hintStyle: TextStyle(color: Colors.grey),
+                         border: OutlineInputBorder(),
+                         errorStyle:
+                                TextStyle(color: Colors.red, fontSize: 15),
+                        filled: true,
+                        fillColor: Colors.white,
+                        enabledBorder: OutlineInputBorder(
+                        //  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                        
+                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide: BorderSide(color: Colors.white, width: 2),
+                          
+                          
+                        ),
+                      ),
+                     controller: emailController,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
+                              return 'Please Enter Email';
+                            } else if (!value.contains('@')) {
+                              return 'Please Enter Valid Email';
                             }
                             return null;
                           },
@@ -166,7 +173,7 @@ import 'package:nft_app/views/authetications/login.dart';
                        SizedBox(height: 18,),
                                
                               Container(
-                                 height: 50,
+                               
                         child:
                          TextFormField(
                            
@@ -179,7 +186,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -194,11 +201,10 @@ import 'package:nft_app/views/authetications/login.dart';
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                        controller: phonenumberController,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
+                              return 'Please Enter phone numer';
                             }
                             return null;
                           },
@@ -207,7 +213,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         SizedBox(height: 18,),
                                
                               Container(
-                                 height: 50,
+                              
                         child:
                          TextFormField(
                           
@@ -219,7 +225,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -234,61 +240,20 @@ import 'package:nft_app/views/authetications/login.dart';
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                       controller: telegramController,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
+                              return 'Please Enter Telegram';
                             }
                             return null;
                           },
                         ),
                       ),
-                      SizedBox(height: 18,),
-                               
-                              Container(
-                                 height: 50,
-                        child:
-                         TextFormField(
-                           
-                          
-                       autofocus: false,
-                          
-                          decoration: InputDecoration(
-                      hintText: "Phone Number",
-                        prefixIcon: Icon(Icons.phone),
-                        hintStyle: TextStyle(color: Colors.grey),
-                         border: OutlineInputBorder(),
-                         errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                      //    borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                        
-                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide: BorderSide(color: Colors.white, width: 2),
-                          
-                          
-                        ),
-                      ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
-                         validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
+                   
                         SizedBox(height: 18,),
                                
                               Container(
-                           height: 50,
+                         
                         child:
                          TextFormField(
                           
@@ -300,7 +265,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -315,11 +280,10 @@ import 'package:nft_app/views/authetications/login.dart';
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                        controller: whatsappController,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
+                              return 'Please Enter whatsapp number';
                             }
                             return null;
                           },
@@ -328,7 +292,7 @@ import 'package:nft_app/views/authetications/login.dart';
                        SizedBox(height: 18,),
                                
                               Container(
-                              height: 50,
+                             
                         child:
                          TextFormField(
                           
@@ -340,7 +304,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -355,11 +319,10 @@ import 'package:nft_app/views/authetications/login.dart';
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                        controller: pinController,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
+                              return 'Please Enter Pin';
                             }
                             return null;
                           },
@@ -368,7 +331,7 @@ import 'package:nft_app/views/authetications/login.dart';
                          SizedBox(height: 18,),
                                
                               Container(
-                        height: 50,
+                      
                         child:
                          TextFormField(
                           
@@ -380,7 +343,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -395,11 +358,10 @@ import 'package:nft_app/views/authetications/login.dart';
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                        controller: uplineController,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
+                              return 'Please Enter Upline id';
                             }
                             return null;
                           },
@@ -408,7 +370,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         SizedBox(height: 18,),
                                
                               Container(
-                          height: 50,
+                        
                         child:
                          TextFormField(
                           
@@ -420,7 +382,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -435,8 +397,8 @@ import 'package:nft_app/views/authetications/login.dart';
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                        
+                        controller: passwordController,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please Enter Password';
@@ -448,7 +410,7 @@ import 'package:nft_app/views/authetications/login.dart';
                        SizedBox(height: 18,),
                                
                               Container(
-                        height: 50,
+                      
                         child:
                          TextFormField(
                           
@@ -460,7 +422,7 @@ import 'package:nft_app/views/authetications/login.dart';
                         hintStyle: TextStyle(color: Colors.grey),
                          border: OutlineInputBorder(),
                          errorStyle:
-                                TextStyle(color: Colors.white, fontSize: 15),
+                                TextStyle(color: Colors.red, fontSize: 15),
                         filled: true,
                         fillColor: Colors.white,
                         enabledBorder: OutlineInputBorder(
@@ -475,11 +437,10 @@ import 'package:nft_app/views/authetications/login.dart';
                           
                         ),
                       ),
-                        // controller:controller. passwordController,
-                       // controller: passwordController,
+                        controller: confirmPasswordController,
                          validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please Enter Password';
+                              return 'Please Enter confirm Password';
                             }
                             return null;
                           },
@@ -504,23 +465,22 @@ import 'package:nft_app/views/authetications/login.dart';
                         ),
                     
                     onPressed: () {
-                //             if (_formKey.currentState!.validate()) {
-                //               setState(() {
-                //            controller.email = controller.emailController.text;
-                //             controller.password = controller. passwordController.text;
-                //           //  email = emailController.text;
-                //           //   password = passwordController.text;
-                //               });
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                          //  controller.email = controller.emailController.text;
+                          //   controller.password = controller. passwordController.text;
+                          //  email = emailController.text;
+                          //   password = passwordController.text;
+                              });
                              
                               
                               
-                //  controller.userLogin(context);
+               
                            
                                 
-                //             }
+                            }
                                     
-                          //   controller.emailController.clear();
-                          //  controller.passwordController.clear();
+                        
                          
                      
                     },
