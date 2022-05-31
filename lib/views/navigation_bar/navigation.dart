@@ -3,11 +3,14 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 // import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/get.dart';
+import 'package:nft_app/views/screens/dashboard_page.dart';
+import 'package:nft_app/views/screens/diposit_withdraw.dart';
 import 'package:nft_app/views/screens/more.dart';
+import 'package:nft_app/views/screens/my_inventory.dart';
 import 'package:nft_app/views/screens/ntf_market.dart';
 import 'package:nft_app/views/screens/setting.dart';
 
-import '../screens/dashboard.dart';
+
 
 const TextStyle _textStyle = TextStyle(
   fontSize: 38,
@@ -38,8 +41,8 @@ class _MaterialYouState extends State<MaterialYou> {
   List<Widget> pages = [
     dashboard(),
     NTFMarket(),
-    dashboard(),
-    dashboard(),
+   MyInventoryPage(),
+   DepositWithdraw(),
    Account(),
   ];
   @override

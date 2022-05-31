@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:nft_app/views/screens/all_history.dart';
 import 'package:nft_app/views/screens/deposit_history.dart';
+import 'package:nft_app/views/screens/refferel_link.dart';
+import 'package:nft_app/views/screens/setting.dart';
 import 'package:nft_app/views/screens/withdraw_history.dart';
 // import 'package:settings_ui/settings_ui.dart';
 
@@ -32,22 +35,25 @@ class _AccountState extends State<Account> {
        
                
                 
-                 ListTile(
-                     tileColor: Colors.white,
-                    title: Text('Referral-Invite',),
-                    trailing: 
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                     
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
+                 GestureDetector(
+                   onTap: (){Get.to(Referralink());},
+                   child: ListTile(
+                       tileColor: Colors.white,
+                      title: Text('Referral-Invite',),
+                      trailing: 
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                       
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
+                   
                     ),
-                 
-                  ),
+                 ),
                   GestureDetector(
                     onTap: (){Get.to(WithdrawHistory());},
                     child: ListTile(
@@ -82,35 +88,41 @@ class _AccountState extends State<Account> {
                       
                     ),
                   ),
-                  ListTile(
-                      tileColor: Colors.white,
-                    title: Text('All History'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
+                  GestureDetector(
+                      onTap: (){Get.to( AllHistory());},
+                    child: ListTile(
+                        tileColor: Colors.white,
+                      title: Text('All History'),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
+                      
                     ),
-                    
                   ),
                
-                 ListTile(
-                     tileColor: Colors.white,
-                    title: Text('Settings'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
+                 GestureDetector(
+                   onTap: (){Get.to(Setting());},
+                   child: ListTile(
+                       tileColor: Colors.white,
+                      title: Text('Settings'),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
+                     
                     ),
-                   
-                  ),
+                 ),
                  Card(
                    color: Colors.white,
                    elevation: 1,
