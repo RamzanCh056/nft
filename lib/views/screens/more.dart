@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nft_app/views/screens/all_history.dart';
 import 'package:nft_app/views/screens/deposit_history.dart';
@@ -21,24 +22,28 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.white,
-      //    appBar: AppBar(title: Text("More"),
-      // centerTitle: true,
-      // backgroundColor: Color.fromARGB(255, 177, 19, 224),
-      
-      // ),
+          appBar: AppBar(
+        title: Text("More"),
+        centerTitle: true,
+        backgroundColor: Color.fromARGB(255, 177, 19, 224),
+      ),
+             backgroundColor: HexColor("#D4F1F4"),
+      //  backgroundColor: Colors.white,
+     
          
        body: SingleChildScrollView(
          child: Column(children: [
-       
+           SizedBox(height: 15,),
                
                 
                  GestureDetector(
                    onTap: (){Get.to(Referralink());},
                    child: ListTile(
-                       tileColor: Colors.white,
+                       tileColor: HexColor("#D4F1F4"),
                       title: Text('Referral-Invite',),
                       trailing: 
                       Row(
@@ -57,7 +62,7 @@ class _AccountState extends State<Account> {
                   GestureDetector(
                     onTap: (){Get.to(WithdrawHistory());},
                     child: ListTile(
-                        tileColor: Colors.white,
+                        tileColor: HexColor("#D4F1F4"),
                       title: Text("Withdraw History"),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -74,7 +79,7 @@ class _AccountState extends State<Account> {
                   GestureDetector(
                      onTap: (){Get.to( DepositHistory());},
                     child: ListTile(
-                        tileColor: Colors.white,
+                        tileColor: HexColor("#D4F1F4"),
                       title: Text('Deposit History'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -91,7 +96,7 @@ class _AccountState extends State<Account> {
                   GestureDetector(
                       onTap: (){Get.to( AllHistory());},
                     child: ListTile(
-                        tileColor: Colors.white,
+                        tileColor: HexColor("#D4F1F4"),
                       title: Text('All History'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -109,7 +114,7 @@ class _AccountState extends State<Account> {
                  GestureDetector(
                    onTap: (){Get.to(Setting());},
                    child: ListTile(
-                       tileColor: Colors.white,
+                       tileColor: HexColor("#D4F1F4"),
                       title: Text('Settings'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -124,10 +129,10 @@ class _AccountState extends State<Account> {
                     ),
                  ),
                  Card(
-                   color: Colors.white,
+                   color: HexColor("#D4F1F4"),
                    elevation: 1,
                    child:   ListTile(
-                     tileColor: Colors.white,
+                     tileColor: HexColor("#D4F1F4"),
                     title: Text('Logout'),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -183,6 +188,7 @@ class _AccountState extends State<Account> {
           
         
       ),
-    );
+    ),
+          );
   }
 }

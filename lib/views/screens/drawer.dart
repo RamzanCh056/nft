@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:nft_app/views/screens/all_history.dart';
+import 'package:nft_app/views/screens/deposit_history.dart';
+import 'package:nft_app/views/screens/refferel_link.dart';
 import 'package:nft_app/views/screens/setting.dart';
+import 'package:nft_app/views/screens/withdraw_history.dart';
 
 
 class newdrawerpage extends StatelessWidget {
@@ -32,7 +37,7 @@ class _drawerState extends State<drawer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-   
+        backgroundColor: HexColor("#D4F1F4"),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -44,79 +49,89 @@ class _drawerState extends State<drawer> {
               children: [
                 
                 Container(
-                                 height: 170,
-                                width: 170,
+                                 height: 130,
+                                width: 270,
                                  
                                   child: Image(image: AssetImage('images/logo.png',), fit: BoxFit.fill,),
                                ),
               ],
             ),
-                    Divider(thickness: 1,color: Colors.grey),
-                 ListTile(
-                     tileColor: Colors.white,
-                    title: Text('Referral-Invite',),
-                    trailing: 
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                     
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
-                    ),
-                 
-                  ),
-                  ListTile(
-                      tileColor: Colors.white,
-                    title: Text("Withdraw History"),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
-                    ),
+          Divider(thickness: 1,color: Colors.grey),
+             GestureDetector(
+                   onTap: (){Get.to(Referralink());},
+                   child: ListTile(
+                       tileColor: HexColor("#D4F1F4"),
+                      title: Text('Referral-Invite',),
+                      trailing: 
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                       
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
                    
-                  ),
-                  ListTile(
-                      tileColor: Colors.white,
-                    title: Text('Deposit History'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
                     ),
-                    
-                  ),
-                  ListTile(
-                      tileColor: Colors.white,
-                    title: Text('All History'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          LineAwesomeIcons.angle_right,
-                          size: 16,
-                        )
-                      ],
+                 ),
+                  GestureDetector(
+                    onTap: (){Get.to(WithdrawHistory());},
+                    child: ListTile(
+                        tileColor: HexColor("#D4F1F4"),
+                      title: Text("Withdraw History"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
+                     
                     ),
-                    
+                  ),
+                  GestureDetector(
+                     onTap: (){Get.to( DepositHistory());},
+                    child: ListTile(
+                        tileColor: HexColor("#D4F1F4"),
+                      title: Text('Deposit History'),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
+                      
+                    ),
+                  ),
+                  GestureDetector(
+                      onTap: (){Get.to( AllHistory());},
+                    child: ListTile(
+                        tileColor: HexColor("#D4F1F4"),
+                      title: Text('All History'),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            LineAwesomeIcons.angle_right,
+                            size: 16,
+                          )
+                        ],
+                      ),
+                      
+                    ),
                   ),
                
                  GestureDetector(
-             onTap: (){
-                     Get.to(Setting());
-             },
+                   onTap: (){Get.to(Setting());},
                    child: ListTile(
-                       tileColor: Colors.white,
+                       tileColor: HexColor("#D4F1F4"),
                       title: Text('Settings'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -130,6 +145,8 @@ class _drawerState extends State<drawer> {
                      
                     ),
                  ),
+                   
+                
                   SizedBox(height: 10,),
                  Card(
                    color: Color.fromARGB(255, 177, 19, 224),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:nft_app/views/screens/drawer.dart';
 
 class Referralink extends StatefulWidget {
@@ -13,10 +14,7 @@ class _ReferralinkState extends State<Referralink> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKe3,
-      drawer: Drawer(
-        child: newdrawerpage(),
-      ),
+     backgroundColor: HexColor("#D4F1F4"),
       appBar: AppBar(
         title: Text("Referral Link:"),
         centerTitle: true,

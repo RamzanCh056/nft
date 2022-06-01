@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:nft_app/controller/constraints.dart';
 
-import 'package:nft_app/views/screens/constraints.dart';
+
 import 'package:nft_app/views/screens/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -45,10 +47,7 @@ class _DepositHistoryState extends State<DepositHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey,
-        drawer: Drawer(
-          child: newdrawerpage(),
-        ),
+        backgroundColor: HexColor("#D4F1F4"),
         appBar: AppBar(
           title: Text("Deposit History"),
           centerTitle: true,

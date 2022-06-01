@@ -2,12 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import 'package:nft_app/views/navigation_bar/navigation.dart';
-import 'package:nft_app/views/screens/constraints.dart';
+
 import 'package:nft_app/views/screens/deposit_money.dart';
 import 'package:nft_app/views/screens/drawer.dart';
 import 'package:http/http.dart' as http;
+
+import '../../controller/constraints.dart';
 
 class DepositWithdraw extends StatefulWidget {
   DepositWithdraw({Key? key}) : super(key: key);
@@ -313,13 +316,12 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey4,
-      drawer: Drawer(
-        child: newdrawerpage(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+     // backgroundColor: HexColor("#D4F1F4"),
       appBar: AppBar(
-        title: Text("Deposit/Withdraw:"),
+        title: Text("Deposit/Withdraw"),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 177, 19, 224),
       ),
@@ -585,6 +587,7 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
           ],
         ),
       ),
+    ),
     );
   }
 }

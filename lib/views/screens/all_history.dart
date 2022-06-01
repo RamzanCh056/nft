@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 import 'package:nft_app/views/screens/constraints.dart';
 import 'package:nft_app/views/screens/drawer.dart';
@@ -44,10 +45,7 @@ class _AllHistoryState extends State<AllHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey5,
-        drawer: Drawer(
-          child: newdrawerpage(),
-        ),
+        backgroundColor: HexColor("#D4F1F4"),
         appBar: AppBar(
           title: Text("All History"),
           centerTitle: true,

@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:nft_app/controller/constraints.dart';
+
 import 'package:nft_app/views/navigation_bar/navigation.dart';
+
+import '../../controller/constraints.dart';
+
 
 class NTFMarket extends StatefulWidget {
   NTFMarket({Key? key}) : super(key: key);

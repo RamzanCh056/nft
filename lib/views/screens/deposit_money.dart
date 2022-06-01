@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
+import 'package:nft_app/controller/constraints.dart';
 
 import 'package:nft_app/views/navigation_bar/navigation.dart';
-import 'package:nft_app/views/screens/constraints.dart';
+
 class Depositmoney extends StatefulWidget {
   const Depositmoney({ Key? key }) : super(key: key);
 
@@ -163,7 +165,7 @@ class _DepositmoneyState extends State<Depositmoney> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+       backgroundColor: HexColor("#D4F1F4"),
       appBar: AppBar(
         title: Text("Deposit money"),
         centerTitle: true,

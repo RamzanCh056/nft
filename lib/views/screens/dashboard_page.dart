@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:nft_app/controller/constraints.dart';
 
-import 'package:nft_app/views/screens/constraints.dart';
+
 import 'package:nft_app/views/screens/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -41,6 +43,7 @@ class _dashboardState extends State<dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: HexColor("#D4F1F4"),
       key: _scaffoldKey,
       drawer: Drawer(
         child: newdrawerpage(),
@@ -64,7 +67,7 @@ class _dashboardState extends State<dashboard> {
                     Column(
                       children: [
                         Image.asset(
-                          "images/nftpic.jpeg",
+                          "images/nftpic.jpg",
                           fit: BoxFit.fill,
                         )
                       ],

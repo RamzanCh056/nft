@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:nft_app/views/screens/constraints.dart';
 
 import 'package:nft_app/views/screens/drawer.dart';
@@ -45,10 +46,7 @@ class _WithdrawHistoryState extends State<WithdrawHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKey1,
-        drawer: Drawer(
-          child: newdrawerpage(),
-        ),
+       backgroundColor: HexColor("#D4F1F4"),
         appBar: AppBar(
           title: Text("Withdraw History"),
           centerTitle: true,

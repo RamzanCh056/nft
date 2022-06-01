@@ -13,12 +13,11 @@ class _MyInventoryPageState extends State<MyInventoryPage> {
   final GlobalKey<ScaffoldState> _scaffoldKe2 = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
       backgroundColor: HexColor("#D4F1F4"),
-      key: _scaffoldKe2,
-      drawer: Drawer(
-        child: newdrawerpage(),
-      ),
+     
       appBar: AppBar(
         title: Text("My Inventory"),
         centerTitle: true,
@@ -110,6 +109,7 @@ class _MyInventoryPageState extends State<MyInventoryPage> {
           ],
         ),
       ),
+    ),
     );
   }
 }
