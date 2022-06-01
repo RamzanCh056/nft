@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nft_app/controller/constraints.dart';
 import 'package:nft_app/views/screens/drawer.dart';
 
 class dashboard extends StatefulWidget {
@@ -72,6 +73,13 @@ class _dashboardState extends State<dashboard> {
                           ),
                           SizedBox(
                             height: 10,
+                          ),
+                           Text(
+                            '$loginToken',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
