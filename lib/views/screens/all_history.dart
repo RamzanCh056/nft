@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'package:nft_app/views/screens/constraints.dart';
 import 'package:nft_app/views/screens/drawer.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class AllHistory extends StatefulWidget {
   AllHistory({Key? key}) : super(key: key);
@@ -10,6 +16,31 @@ class AllHistory extends StatefulWidget {
 
 class _AllHistoryState extends State<AllHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey5 = GlobalKey<ScaffoldState>();
+  AllHistory() async {
+    var auth = "HSYE683H38S";
+    var response = await http.post(
+      Uri.parse(
+        'https://mining-nfts.com/api/',
+      ),
+      body: {
+        "logged": "$loginToken",
+        "auth": "$auth",
+        "history": '',
+      },
+    );
+    var data2 = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      var status = int.parse(data2['status']);
+      if (status == 200) {
+        Allhistory = data2['message'];
+        print("api is hit on dashboard");
+      } else {
+        print(response.reasonPhrase);
+        print("api not hit on login$data2");
+      }
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +53,7 @@ class _AllHistoryState extends State<AllHistory> {
           centerTitle: true,
           backgroundColor: Color.fromARGB(255, 177, 19, 224),
         ),
-        body: Column(children: [
+        body: ListView(children: [
           // SizedBox(
           //   height: 10,
           // ),
@@ -56,71 +87,98 @@ class _AllHistoryState extends State<AllHistory> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                // border: Border.all(width: 2,color: Colors.)
-              ),
-              // margin: EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Table(
-                  defaultColumnWidth: FixedColumnWidth(140.0),
-                  children: [
-                    TableRow(children: [
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('ID',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Type',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Message',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Date Time',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold)),
-                        SizedBox(
-                          height: 5,
-                        ),
-                      ]),
-                    ]),
-                    TableRow(children: [
-                      Column(children: [Text('17211')]),
-                      Column(children: [Text('Signup Bonus')]),
-                      Column(children: [Text('ramzan, you received bonus 5')]),
-                      Column(children: [
-                        Text('2022-05-27 21:12:24'),
-                        SizedBox(
-                          height: 25,
-                        ),
-                      ]),
-                    ]),
-                  ],
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  // border: Border.all(width: 2,color: Colors.)
                 ),
-              ),
-            ),
-          ),
+                // margin: EdgeInsets.all(20),
+                child: FutureBuilder(
+                  future: AllHistory(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      return ListView.builder(
+                        itemCount: Allhistory.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(children: [
+                              Table(
+                                defaultColumnWidth: FixedColumnWidth(140.0),
+                                children: [
+                                  TableRow(children: [
+                                    Column(children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text('ID',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold))
+                                    ]),
+                                    Column(children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text('Type',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold))
+                                    ]),
+                                    Column(children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text('Message',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold))
+                                    ]),
+                                    Column(children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text('Date Time',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold)),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                    ]),
+                                  ]),
+                                  TableRow(children: [
+                                    Column(children: [
+                                      Text('${Allhistory[index]["id"]}')
+                                    ]),
+                                    Column(children: [
+                                      Text('${Allhistory[index]["type"]}')
+                                    ]),
+                                    Column(children: [
+                                      Text('${Allhistory[index]["message"]}')
+                                    ]),
+                                    Column(children: [
+                                      Text('${Allhistory[index]["date"]}'),
+                                      SizedBox(
+                                        height: 25,
+                                      ),
+                                    ]),
+                                  ]),
+                                ],
+                              ),
+                            ]),
+                          );
+                        },
+                      );
+                    }
+                  },
+                ),
+              )),
         ]));
   }
 }

@@ -1,5 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:nft_app/views/navigation_bar/navigation.dart';
+import 'package:nft_app/views/screens/constraints.dart';
+import 'package:nft_app/views/screens/deposit_money.dart';
 import 'package:nft_app/views/screens/drawer.dart';
+import 'package:http/http.dart' as http;
 
 class DepositWithdraw extends StatefulWidget {
   DepositWithdraw({Key? key}) : super(key: key);
@@ -10,6 +18,299 @@ class DepositWithdraw extends StatefulWidget {
 
 class _DepositWithdrawState extends State<DepositWithdraw> {
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
+  var amountController=TextEditingController();
+  var addressController=TextEditingController();
+  var processingFee=0.obs;
+  var receiveAmount=0.obs;
+
+
+  insertAddress() async {
+    // var data = {'username': username, 'password': password};
+    var auth="HSYE683H38S";
+    // var data1 = json.encode(data);
+    var response = await http.post(
+      Uri.parse(
+        'http://mining-nfts.com/api/',
+      ),
+      body: {
+        'auth': 'HSYE683H38S',
+        'logged': '$loginToken',
+        'withdraw': '',
+        'usdtAddress':'',
+      },
+    );
+    var data2 = jsonDecode(response.body.toString());
+
+    if(response.statusCode==200){
+      var status=int.parse(data2['status']);
+      if (status== 200) {
+        print("api is hit on login");
+        previousAddress=data2['message'];
+        addressController.text=data2['message'];
+        // Get.snackbar(
+        //   "${data2['message']}",
+        //   "",
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.black,
+        //   borderRadius: 20,
+        //   margin: EdgeInsets.all(15),
+        //   colorText: Colors.red,
+        //   messageText: Text(
+        //     "Wrong credential",
+        //     style: TextStyle(color: Colors.white),
+        //   ),
+        //   duration: Duration(seconds: 4),
+        //   isDismissible: true,
+        //   forwardAnimationCurve: Curves.easeOutBack,
+        // );
+        // Get.snackbar(
+        //   "",
+        //   "",
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.black,
+        //   borderRadius: 20,
+        //   margin: EdgeInsets.all(15),
+        //   colorText: Colors.green,
+        //   messageText: Text(
+        //     "Login successfully",
+        //     style: TextStyle(color: Colors.white),
+        //   ),
+        //   duration: Duration(seconds: 4),
+        //   isDismissible: true,
+        //   forwardAnimationCurve: Curves.easeOutBack,
+        // );
+
+        Get.to(MaterialYou());
+      } else {
+        print(response.reasonPhrase);
+        print("api not hit on login= $data2");
+        Get.snackbar(
+          "${data2['message']}",
+          "",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black,
+          borderRadius: 20,
+          margin: EdgeInsets.all(15),
+          colorText: Colors.red,
+          messageText: Text(
+            "Wrong credential",
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(seconds: 4),
+          isDismissible: true,
+          forwardAnimationCurve: Curves.easeOutBack,
+        );
+      }
+    }
+    else{
+      Get.snackbar(
+        "Internal Server Issue",
+        "",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.black,
+        borderRadius: 20,
+        margin: EdgeInsets.all(15),
+        colorText: Colors.red,
+        messageText: Text(
+          "Wrong credential",
+          style: TextStyle(color: Colors.white),
+        ),
+        duration: Duration(seconds: 4),
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutBack,
+      );
+
+    }
+
+
+    // if (response == 201) {
+
+    //   // print(await response.stream.bytesToString());
+
+    //   print("api is hit on login");
+    //   Get.snackbar(
+    //     "",
+    //     "",
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     backgroundColor: Colors.black,
+    //     borderRadius: 20,
+    //     margin: EdgeInsets.all(15),
+    //     colorText: Colors.green,
+    //     messageText: Text(
+    //       "Login successfully",
+    //       style: TextStyle(color: Colors.white),
+    //     ),
+    //     duration: Duration(seconds: 4),
+    //     isDismissible: true,
+    //     forwardAnimationCurve: Curves.easeOutBack,
+    //   );
+
+    //   Get.to(MaterialYou());
+    // } else {
+    //   print(response.reasonPhrase);
+    //   print("api not hit on login");
+    // Get.snackbar(
+    //   "Wrong",
+    //   "",
+    //   snackPosition: SnackPosition.BOTTOM,
+    //   backgroundColor: Colors.black,
+    //   borderRadius: 20,
+    //   margin: EdgeInsets.all(15),
+    //   colorText: Colors.red,
+    //   messageText: Text(
+    //     "Wrong credential",
+    //     style: TextStyle(color: Colors.white),
+    //   ),
+    //   duration: Duration(seconds: 4),
+    //   isDismissible: true,
+    //   forwardAnimationCurve: Curves.easeOutBack,
+    // );
+    // }
+  }
+
+  withdrawUSDT(var amount, var number) async {
+    // var data = {'username': username, 'password': password};
+    var auth="HSYE683H38S";
+    // var data1 = json.encode(data);
+    var response = await http.post(
+      Uri.parse(
+        'http://mining-nfts.com/api/',
+      ),
+      body: {
+        'auth': 'HSYE683H38S',
+        'logged': '$loginToken',
+        'withdraw': '',
+        'save_request':'',
+        'amount':'${amount}',
+        'number':'${number}',
+      },
+    );
+    var data2 = jsonDecode(response.body.toString());
+
+    if(response.statusCode==200){
+      var status=int.parse(data2['status']);
+      if (status== 200) {
+        print("api is hit on login");
+        // previousAddress=data2['message'];
+        // addressController.text=data2['message'];
+        // Get.snackbar(
+        //   "${data2['message']}",
+        //   "",
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.black,
+        //   borderRadius: 20,
+        //   margin: EdgeInsets.all(15),
+        //   colorText: Colors.red,
+        //   messageText: Text(
+        //     "Wrong credential",
+        //     style: TextStyle(color: Colors.white),
+        //   ),
+        //   duration: Duration(seconds: 4),
+        //   isDismissible: true,
+        //   forwardAnimationCurve: Curves.easeOutBack,
+        // );
+        // Get.snackbar(
+        //   "",
+        //   "",
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   backgroundColor: Colors.black,
+        //   borderRadius: 20,
+        //   margin: EdgeInsets.all(15),
+        //   colorText: Colors.green,
+        //   messageText: Text(
+        //     "Login successfully",
+        //     style: TextStyle(color: Colors.white),
+        //   ),
+        //   duration: Duration(seconds: 4),
+        //   isDismissible: true,
+        //   forwardAnimationCurve: Curves.easeOutBack,
+        // );
+
+        Get.to(MaterialYou());
+      } else {
+        print(response.reasonPhrase);
+        print("api not hit on login= $data2");
+        Get.snackbar(
+          "${data2['message']}",
+          "",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black,
+          borderRadius: 20,
+          margin: EdgeInsets.all(15),
+          colorText: Colors.red,
+          messageText: Text(
+            "Wrong credential",
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(seconds: 4),
+          isDismissible: true,
+          forwardAnimationCurve: Curves.easeOutBack,
+        );
+      }
+    }
+    else{
+      Get.snackbar(
+        "Internal Server Issue",
+        "",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.black,
+        borderRadius: 20,
+        margin: EdgeInsets.all(15),
+        colorText: Colors.red,
+        duration: Duration(seconds: 4),
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutBack,
+      );
+
+    }
+
+
+    // if (response == 201) {
+
+    //   // print(await response.stream.bytesToString());
+
+    //   print("api is hit on login");
+    //   Get.snackbar(
+    //     "",
+    //     "",
+    //     snackPosition: SnackPosition.BOTTOM,
+    //     backgroundColor: Colors.black,
+    //     borderRadius: 20,
+    //     margin: EdgeInsets.all(15),
+    //     colorText: Colors.green,
+    //     messageText: Text(
+    //       "Login successfully",
+    //       style: TextStyle(color: Colors.white),
+    //     ),
+    //     duration: Duration(seconds: 4),
+    //     isDismissible: true,
+    //     forwardAnimationCurve: Curves.easeOutBack,
+    //   );
+
+    //   Get.to(MaterialYou());
+    // } else {
+    //   print(response.reasonPhrase);
+    //   print("api not hit on login");
+    // Get.snackbar(
+    //   "Wrong",
+    //   "",
+    //   snackPosition: SnackPosition.BOTTOM,
+    //   backgroundColor: Colors.black,
+    //   borderRadius: 20,
+    //   margin: EdgeInsets.all(15),
+    //   colorText: Colors.red,
+    //   messageText: Text(
+    //     "Wrong credential",
+    //     style: TextStyle(color: Colors.white),
+    //   ),
+    //   duration: Duration(seconds: 4),
+    //   isDismissible: true,
+    //   forwardAnimationCurve: Curves.easeOutBack,
+    // );
+    // }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +335,9 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
               children: [
                 MaterialButton(
                   color: Color.fromARGB(255, 177, 19, 224),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(Depositmoney());
+                  },
                   child: Text(
                     'Deposit Money',
                     style: TextStyle(color: Colors.white, fontSize: 18),
@@ -85,6 +388,13 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
                     ),
                 child: TextFormField(
                   autofocus: false,
+                  controller: amountController,
+                  onChanged: (val){
+                    if(val.isEmpty){
+                      processingFee.value=0;
+                    }
+                    processingFee.value=int.parse(val);
+                    },
                   decoration: InputDecoration(
                     hintText: 'USDT',
                     fillColor: Colors.grey[300],
@@ -128,6 +438,7 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
                     ),
                 child: TextFormField(
                   autofocus: false,
+                  controller: addressController,
                   decoration: InputDecoration(
                     hintText: 'USDT Address (TRC20)',
                     fillColor: Colors.grey[300],
@@ -149,8 +460,25 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
               ),
             ),
             SizedBox(
-              height: 15,
+              height: 10,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                MaterialButton(
+                  color: Color.fromARGB(255, 177, 19, 224),
+                  onPressed: () {
+                    insertAddress();
+                  },
+                  shape: StadiumBorder(),
+                  child: Text(
+                    'Insert previous address',
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ),
+              ],
+            ),
+
             Row(
               children: [
                 Text(
@@ -164,10 +492,11 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
             ),
             Row(
               children: [
-                Text(
-                  '5%',
+                Obx(() =>  Text(
+                  (processingFee.value==0 || amountController=="")?'5%':'${processingFee.value*0.05}',
                   style: TextStyle(fontWeight: FontWeight.bold),
-                )
+                ),)
+
               ],
             ),
             SizedBox(
@@ -186,10 +515,11 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
             ),
             Row(
               children: [
-                Text(
-                  '0',
+                Obx(() => Text(
+                  '${processingFee.value*0.95}',
                   style: TextStyle(fontWeight: FontWeight.bold),
-                )
+                ),)
+
               ],
             ),
             SizedBox(
@@ -197,7 +527,27 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
             ),
             MaterialButton(
               color: Color.fromARGB(255, 177, 19, 224),
-              onPressed: () {},
+              onPressed: () {
+                if(amountController.text!="" && addressController.text!=""){
+                  withdrawUSDT(amountController.text, addressController.text);
+                }
+                else{
+                  Get.snackbar(
+                    "Kindly, put your Amount & Address",
+                    "",
+                    snackPosition: SnackPosition.BOTTOM,
+                    backgroundColor: Colors.black,
+                    borderRadius: 20,
+                    margin: EdgeInsets.all(15),
+                    colorText: Colors.red,
+                    duration: Duration(seconds: 4),
+                    isDismissible: true,
+                    forwardAnimationCurve: Curves.easeOutBack,
+                  );
+
+                }
+
+              },
               child: Text(
                 'Buy a NFT First',
                 style: TextStyle(color: Colors.white, fontSize: 18),

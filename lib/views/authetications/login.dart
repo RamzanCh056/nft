@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:nft_app/controller/constraints.dart';
+
 
 import 'package:nft_app/views/authetications/signup.dart';
 import 'package:flutter_animated_button/flutter_animated_button.dart';
@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:nft_app/views/navigation_bar/navigation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:nft_app/views/screens/constraints.dart';
 
 var user_details;
 

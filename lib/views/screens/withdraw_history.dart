@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:nft_app/views/screens/constraints.dart';
+
 import 'package:nft_app/views/screens/drawer.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class WithdrawHistory extends StatefulWidget {
   WithdrawHistory({Key? key}) : super(key: key);
@@ -10,6 +16,32 @@ class WithdrawHistory extends StatefulWidget {
 
 class _WithdrawHistoryState extends State<WithdrawHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey1 = GlobalKey<ScaffoldState>();
+  WithdrawHistory() async {
+    var auth = "HSYE683H38S";
+    var response = await http.post(
+      Uri.parse(
+        'https://mining-nfts.com/api/',
+      ),
+      body: {
+        "logged": "$loginToken",
+        "auth": "$auth",
+        "history": '',
+        "withdraw_history": ''
+      },
+    );
+    var data2 = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      var status = int.parse(data2['status']);
+      if (status == 200) {
+        withdrawhistory = data2['message'];
+        print("api is hit on dashboard");
+      } else {
+        print(response.reasonPhrase);
+        print("api not hit on login$data2");
+      }
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +54,7 @@ class _WithdrawHistoryState extends State<WithdrawHistory> {
           centerTitle: true,
           backgroundColor: Color.fromARGB(255, 177, 19, 224),
         ),
-        body: Column(children: [
+        body: ListView(children: [
           // SizedBox(
           //   height: 10,
           // ),
@@ -63,102 +95,111 @@ class _WithdrawHistoryState extends State<WithdrawHistory> {
                 // border: Border.all(width: 2,color: Colors.)
               ),
               // margin: EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Table(
-                  defaultColumnWidth: FixedColumnWidth(120.0),
-                  children: [
-                    TableRow(children: [
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('ID',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('USDT Address(TRC20)',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Amount',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Recieve',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Processing Fee',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                      Column(children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text('Status',
-                            style: TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold))
-                      ]),
-                    ]),
-                    TableRow(children: [
-                      Column(children: [Text('1')]),
-                      Column(children: [Text('Flutter')]),
-                      Column(children: [Text('5*')]),
-                      Column(children: [Text('Javatpoint')]),
-                      Column(children: [Text('Flutter')]),
-                      Column(children: [
-                        Text('5*'),
-                        SizedBox(
-                          height: 5,
-                        ),
-                      ]),
-                    ]),
-                    TableRow(children: [
-                      Column(children: [Text('2')]),
-                      Column(children: [Text('MySQL')]),
-                      Column(children: [Text('5*')]),
-                      Column(children: [Text('Javatpoint')]),
-                      Column(children: [Text('Flutter')]),
-                      Column(children: [
-                        Text('5*'),
-                        SizedBox(
-                          height: 5,
-                        ),
-                      ]),
-                    ]),
-                    TableRow(children: [
-                      Column(children: [Text('3')]),
-                      Column(children: [Text('ReactJS')]),
-                      Column(children: [Text('5*')]),
-                      Column(children: [Text('Javatpoint')]),
-                      Column(children: [Text('Flutter')]),
-                      Column(children: [
-                        Text('5*'),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ]),
-                    ]),
-                  ],
-                ),
+              child: FutureBuilder(
+                future: WithdrawHistory(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else {
+                    return ListView.builder(
+                      itemCount: withdrawhistory.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      // scrollDirection: Axis.horizontal,
+
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: ScrollPhysics(),
+                          child: Table(
+                            defaultColumnWidth: FixedColumnWidth(120.0),
+                            children: [
+                              TableRow(children: [
+                                Column(children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text('ID',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold))
+                                ]),
+                                Column(children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text('USDT Address(TRC20)',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold))
+                                ]),
+                                Column(children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text('Amount',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold))
+                                ]),
+                                Column(children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text('Recieve',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold))
+                                ]),
+                                Column(children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text('Processing Fee',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold))
+                                ]),
+                                Column(children: [
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text('Status',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold))
+                                ]),
+                              ]),
+                              TableRow(children: [
+                                Column(children: [
+                                  Text('${withdrawhistory[index]["id"]}')
+                                ]),
+                                Column(children: [
+                                  Text('${withdrawhistory[index]["number"]}')
+                                ]),
+                                Column(children: [
+                                  Text('${withdrawhistory[index]["amount"]}')
+                                ]),
+                                Column(children: [
+                                  Text('${withdrawhistory[index]["receive"]}')
+                                ]),
+                                Column(children: [
+                                  Text('${withdrawhistory[index]["fee"]}')
+                                ]),
+                                Column(children: [
+                                  Text('${withdrawhistory[index]["status"]}'),
+                                  SizedBox(
+                                    height: 25,
+                                  ),
+                                ]),
+                              ]),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ),

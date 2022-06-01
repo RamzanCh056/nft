@@ -9,8 +9,118 @@ class Setting extends StatefulWidget {
 
 class _SettingState extends State<Setting> {
   final _formKey1 = GlobalKey<FormState>();
+    late double height;
+  late double width;
+  bool checkedValue = true;
+  bool checkedValuetwo = true;
+   
+   Future<void> showInformationDialogtwo(BuildContext context) async {
+    return await showDialog(context: context,
+    builder: (context){
+     
+      bool isChecked = false;
+      return StatefulBuilder(builder: (context,setState){
+        return AlertDialog(
+          backgroundColor:  Color(0xff17181A),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.end,
+                 children: [
+                   GestureDetector(
+                                        onTap: (){ Navigator.of(context).pop();},
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Icon(
+                                              Icons.clear,
+                                              color: Colors.grey.shade200,
+                                              size: 15.0,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+               ],
+               
+              ),
+                Text(
+                  'Security Code',
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        // height: 50,/
+                        child: TextFormField(
+                          autofocus: false,
+                          decoration: InputDecoration(
+                            hintText: "Security Code",
+                            // prefixIcon: Icon(Icons.email),
+                            hintStyle: TextStyle(),
+                            border: OutlineInputBorder(),
+                            errorStyle:
+                                TextStyle(color: Colors.white, fontSize: 15),
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              //  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(color: Colors.white, width: 2),
+                            ),
+                          ),
+                          // controller:controller. emailController,
+
+                          // validator: (value) {
+                          //   if (value == null || value.isEmpty) {
+                          //     return 'Please Enter Email';
+                          //   } else if (!value.contains('@')) {
+                          //     return 'Please Enter Valid Email';
+                          //   }
+                          //   return null;
+                          // },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                MaterialButton(
+                  color: Colors.blue[300],
+                  onPressed: () {
+                    // _showMyDialog();
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    'Verify',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+    }
+    );
+}
   @override
   Widget build(BuildContext context) {
+      height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -401,7 +511,7 @@ class _SettingState extends State<Setting> {
               MaterialButton(
                 color: Colors.blue[300],
                 onPressed: () {
-                  _showMyDialog();
+              showInformationDialogtwo(context);
                 },
                 child: Text(
                   'Change',

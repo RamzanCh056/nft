@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 // import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get/get.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:nft_app/views/screens/dashboard_page.dart';
 import 'package:nft_app/views/screens/diposit_withdraw.dart';
 import 'package:nft_app/views/screens/more.dart';
@@ -48,14 +49,15 @@ class _MaterialYouState extends State<MaterialYou> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Colors.black,
+       // backgroundColor: Colors.black,
         body: Center(
           child: pages[_currentIndex],
         ),
         bottomNavigationBar: NavigationBarTheme(
           data: NavigationBarThemeData(
+
             // indicatorColor: Colors.blue.shade200,
-            //  backgroundColor: Colors.blue.shade500,
+              backgroundColor: HexColor("#D4F1F4"),
             labelTextStyle: MaterialStateProperty.all(
               TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
             ),

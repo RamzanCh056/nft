@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nft_app/views/screens/drawer.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class MyInventoryPage extends StatefulWidget {
   MyInventoryPage({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class _MyInventoryPageState extends State<MyInventoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: HexColor("#D4F1F4"),
       key: _scaffoldKe2,
       drawer: Drawer(
         child: newdrawerpage(),
@@ -57,56 +59,54 @@ class _MyInventoryPageState extends State<MyInventoryPage> {
             ),
             Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 177, 19, 224),
+                 
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 200,
+                      height: 224,
                       width: double.infinity,
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 100,
-                          ),
-                          Text(
-                            'Best NFT Marketplace',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
+                          // SizedBox(
+                          //   height: 100,
+                          // ),
+                          Image.asset("images/nftpic.jpg", fit: BoxFit.fill,)
                         ],
                       ),
                     ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 224, 98, 247),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Buy NFT from NFT Market',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                    GestureDetector(
+                      onTap: (){},
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 224, 98, 247),
+                          borderRadius: BorderRadius.circular(3),
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              'Buy NFT from NFT Market',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
-                )),
+                )
+                ),
           ],
         ),
       ),

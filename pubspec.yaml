@@ -38,6 +38,9 @@ dependencies:
   get: ^4.6.5
   line_awesome_flutter: ^2.0.0
   http: ^0.13.4
+  hexcolor: ^2.0.7
+  flutter_expanded_tile: ^0.3.6
+
 
 dev_dependencies:
   flutter_test:
