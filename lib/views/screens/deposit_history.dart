@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:nft_app/controller/constraints.dart';
 
-
 import 'package:nft_app/views/screens/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -94,112 +93,88 @@ class _DepositHistoryState extends State<DepositHistory> {
                 // border: Border.all(width: 2,color: Colors.)
               ),
               // margin: EdgeInsets.all(20),
-              child: FutureBuilder(
-                future: DepositHistory(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else {
-                    return ListView.builder(
-                      itemCount: Deposithistory.length,
-                      physics: NeverScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          'Address',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        ),
+                        Text(
+                          'Amount',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        ),
+                        Text(
+                          'Recieve',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        ),
+                        Text(
+                          'processing ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        ),
+                        Text(
+                          'Status',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                  FutureBuilder(
+                    future: DepositHistory(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else {
+                        return ListView.builder(
+                          itemCount: Deposithistory.length,
+                          physics: NeverScrollableScrollPhysics(),
 
-                      // scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Table(
-                              defaultColumnWidth: FixedColumnWidth(120.0),
-                              // border: TableBorder.all(
-                              //     color: Colors.grey.shade300,
-                              //     style: BorderStyle.solid,
-                              //     width: 2),
+                          // scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Column(
                               children: [
-                                TableRow(children: [
-                                  Column(children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text('ID',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold))
-                                  ]),
-                                  Column(children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text('Pay address',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold))
-                                  ]),
-                                  Column(children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text('Amount',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold))
-                                  ]),
-                                  Column(children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text('Recieve',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold))
-                                  ]),
-                                  Column(children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text('Processing Fee',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold))
-                                  ]),
-                                  Column(children: [
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text('Status',
-                                        style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold))
-                                  ]),
-                                ]),
-                                TableRow(children: [
-                                  Column(children: [
-                                    Text('${Deposithistory[index]["id"]}')
-                                  ]),
-                                  Column(children: [
-                                    Text(
-                                        '${Deposithistory[index]["pay_address"]}')
-                                  ]),
-                                  Column(children: [
-                                    Text(
-                                        '${Deposithistory[index]["price_amount"]}')
-                                  ]),
-                                  Column(children: [Text('-1')]),
-                                  Column(children: [Text('1')]),
-                                  Column(children: [
-                                    Text(
-                                        '${Deposithistory[index]["payment_status"]}'),
-                                    SizedBox(
-                                      height: 45,
-                                    ),
-                                  ]),
-                                ]),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                          child: Text(
+                                              '${Deposithistory[index]["pay_address"]}')),
+                                      Expanded(
+                                          child: Text(
+                                              '${Deposithistory[index]["price_amount"]}')),
+                                      Expanded(child: Text('-1')),
+                                      Expanded(child: Text('1')),
+                                      Expanded(
+                                          child: Text(
+                                              '${Deposithistory[index]["payment_status"]}')),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                               ],
-                            ));
-                      },
-                    );
-                  }
-                },
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                ],
               ),
             ),
           ),

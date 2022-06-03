@@ -7,6 +7,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:nft_app/views/screens/all_history.dart';
 import 'package:nft_app/views/screens/deposit_history.dart';
+import 'package:nft_app/views/screens/notification.dart';
 import 'package:nft_app/views/screens/refferel_link.dart';
 import 'package:nft_app/views/screens/setting.dart';
 import 'package:nft_app/views/screens/withdraw_history.dart';
@@ -20,175 +21,438 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+    late double height;
+  late double width;
+
   @override
   Widget build(BuildContext context) {
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
+      home: Scaffold(
+      appBar: AppBar(
+         backgroundColor: Color.fromARGB(255, 177, 19, 224),
+         centerTitle: true,
         title: Text("More"),
-        centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 177, 19, 224),
       ),
-             backgroundColor: HexColor("#D4F1F4"),
-      //  backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              ListTile(
+                leading: Card(
+                  color: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.person_add_alt_rounded,
+                    size: 30.0,
+                    color: Color.fromARGB(255, 177, 19, 224),
+                  ),
+                ),
+                title: Text(
+                  "Referral-Invite",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+                trailing: Card(
+                  color: Colors.grey.shade200,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: width * 0.01),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>  Referralink (),
+                                ));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 30.0,
+                            color: Color.fromARGB(255, 177, 19, 224),
+                          ))),
+                ),
+              ),
+              ListTile(
+                leading: Card(
+                  color: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.history_edu,
+                    size: 30.0,
+                    color:  Color.fromARGB(255, 177, 19, 224),
+                  ),
+                ),
+                title: Text(
+                  "Withdraw History",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+                trailing: Card(
+                  color: Colors.grey.shade200,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: width * 0.01),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WithdrawHistory(),
+                                ));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 30.0,
+                            color:  Color.fromARGB(255, 177, 19, 224),
+                          ))),
+                ),
+              ),
+              ListTile(
+                leading: Card(
+                  color: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.speaker_group_outlined,
+                    size: 30.0,
+                    color:  Color.fromARGB(255, 177, 19, 224),
+                  ),
+                ),
+                title: Text(
+                  "Deposit History",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+                trailing: Card(
+                  color: Colors.grey.shade200,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: width * 0.01),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DepositHistory(),
+                                ));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 30.0,
+                            color:  Color.fromARGB(255, 177, 19, 224),
+                          ))),
+                ),
+              ),
+              ListTile(
+                leading: Card(
+                  color: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.find_in_page,
+                    size: 30.0,
+                    color:  Color.fromARGB(255, 177, 19, 224),
+                  ),
+                ),
+                title: Text(
+                  "All History",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+                trailing: Card(
+                  color: Colors.grey.shade200,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: width * 0.01),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AllHistory(),
+                                ));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 30.0,
+                            color:  Color.fromARGB(255, 177, 19, 224),
+                          ))),
+                ),
+              ),
+              ListTile(
+                leading: Card(
+                  color: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.settings,
+                    size: 30.0,
+                    color: Color.fromARGB(255, 177, 19, 224),
+                  ),
+                ),
+                title: Text(
+                  "My Setting",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+                trailing: Card(
+                  color: Colors.grey.shade200,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: width * 0.01),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Setting(),
+                                ));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 30.0,
+                            color:  Color.fromARGB(255, 177, 19, 224),
+                          ))),
+                ),
+              ),
+               ListTile(
+                leading: Card(
+                  color: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.notifications,
+                    size: 30.0,
+                    color: Color.fromARGB(255, 177, 19, 224),
+                  ),
+                ),
+                title: Text(
+                  "Notifications",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+                trailing: Card(
+                  color: Colors.grey.shade200,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: width * 0.01),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => notification(),
+                                ));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 30.0,
+                            color:  Color.fromARGB(255, 177, 19, 224),
+                          ))),
+                ),
+              ),
+                ListTile(
+                leading: Card(
+                  color: Colors.grey.shade200,
+                  child: Icon(
+                    Icons.logout,
+                    size: 30.0,
+                    color:  Color.fromARGB(255, 177, 19, 224),
+                  ),
+                ),
+                title: Text(
+                  "Logout",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+                trailing: Card(
+                  color: Colors.grey.shade200,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: width * 0.01),
+                      child: IconButton(
+                          onPressed: () {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //       builder: (context) => contact(),
+                            //     ));
+                          },
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 30.0,
+                            color:  Color.fromARGB(255, 177, 19, 224),
+                          ))),
+                ),
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
+            ],
+          ),
+        ),
+      ),
+    
+     
+
+    ),
+
+      
+      // SafeArea(
+      // child: Scaffold(
+      //     appBar: AppBar(
+      //   title: Text("More"),
+      //   centerTitle: true,
+      //   backgroundColor: Color.fromARGB(255, 177, 19, 224),
+      // ),
+      //        backgroundColor: HexColor("#D4F1F4"),
+      // //  backgroundColor: Colors.white,
      
          
-       body: SingleChildScrollView(
-         child: Column(children: [
-           SizedBox(height: 15,),
+      //  body: SingleChildScrollView(
+      //    child: Column(children: [
+      //      SizedBox(height: 15,),
                
-                
-                 GestureDetector(
-                   onTap: (){Get.to(Referralink());},
-                   child: ListTile(
-                       tileColor: HexColor("#D4F1F4"),
-                      title: Text('Referral-Invite',),
-                      trailing: 
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
+      //           SizedBox(
+      //             height: 50,
+      //             child:Card(
+      //               elevation: 3,
+      //               child:  Row(
+      //                 children: [
+      //             Icon(Icons.person_add_alt_rounded),
+      //             SizedBox(width: 3,),
+      //              Text('Referral-Invite',),
+                   
+      //             ],),),
+      //           )
+      //           //  GestureDetector(
+      //           //    onTap: (){Get.to(Referralink());},
+      //           //    child: ListTile(
+      //           //        tileColor: HexColor("#D4F1F4"),
+      //           //       title: Text('Referral-Invite',),
+      //           //       trailing: 
+      //           //       Row(
+      //           //         mainAxisSize: MainAxisSize.min,
+      //           //         children: [
                        
-                          Icon(
-                            LineAwesomeIcons.angle_right,
-                            size: 16,
-                          )
-                        ],
-                      ),
+      //           //           Icon(
+      //           //             LineAwesomeIcons.angle_right,
+      //           //             size: 16,
+      //           //           )
+      //           //         ],
+      //           //       ),
                    
-                    ),
-                 ),
-                  GestureDetector(
-                    onTap: (){Get.to(WithdrawHistory());},
-                    child: ListTile(
-                        tileColor: HexColor("#D4F1F4"),
-                      title: Text("Withdraw History"),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            LineAwesomeIcons.angle_right,
-                            size: 16,
-                          )
-                        ],
-                      ),
+      //           //     ),
+      //           //  ),
+      //           //   GestureDetector(
+      //           //     onTap: (){Get.to(WithdrawHistory());},
+      //           //     child: ListTile(
+      //           //         tileColor: HexColor("#D4F1F4"),
+      //           //       title: Text("Withdraw History"),
+      //           //       trailing: Row(
+      //           //         mainAxisSize: MainAxisSize.min,
+      //           //         children: [
+      //           //           Icon(
+      //           //             LineAwesomeIcons.angle_right,
+      //           //             size: 16,
+      //           //           )
+      //           //         ],
+      //           //       ),
                      
-                    ),
-                  ),
-                  GestureDetector(
-                     onTap: (){Get.to( DepositHistory());},
-                    child: ListTile(
-                        tileColor: HexColor("#D4F1F4"),
-                      title: Text('Deposit History'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            LineAwesomeIcons.angle_right,
-                            size: 16,
-                          )
-                        ],
-                      ),
+      //           //     ),
+      //           //   ),
+      //           //   GestureDetector(
+      //           //      onTap: (){Get.to( DepositHistory());},
+      //           //     child: ListTile(
+      //           //         tileColor: HexColor("#D4F1F4"),
+      //           //       title: Text('Deposit History'),
+      //           //       trailing: Row(
+      //           //         mainAxisSize: MainAxisSize.min,
+      //           //         children: [
+      //           //           Icon(
+      //           //             LineAwesomeIcons.angle_right,
+      //           //             size: 16,
+      //           //           )
+      //           //         ],
+      //           //       ),
                       
-                    ),
-                  ),
-                  GestureDetector(
-                      onTap: (){Get.to( AllHistory());},
-                    child: ListTile(
-                        tileColor: HexColor("#D4F1F4"),
-                      title: Text('All History'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            LineAwesomeIcons.angle_right,
-                            size: 16,
-                          )
-                        ],
-                      ),
+      //           //     ),
+      //           //   ),
+      //           //   GestureDetector(
+      //           //       onTap: (){Get.to( AllHistory());},
+      //           //     child: ListTile(
+      //           //         tileColor: HexColor("#D4F1F4"),
+      //           //       title: Text('All History'),
+      //           //       trailing: Row(
+      //           //         mainAxisSize: MainAxisSize.min,
+      //           //         children: [
+      //           //           Icon(
+      //           //             LineAwesomeIcons.angle_right,
+      //           //             size: 16,
+      //           //           )
+      //           //         ],
+      //           //       ),
                       
-                    ),
-                  ),
+      //           //     ),
+      //           //   ),
                
-                 GestureDetector(
-                   onTap: (){Get.to(Setting());},
-                   child: ListTile(
-                       tileColor: HexColor("#D4F1F4"),
-                      title: Text('Settings'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            LineAwesomeIcons.angle_right,
-                            size: 16,
-                          )
-                        ],
-                      ),
+      //           //  GestureDetector(
+      //           //    onTap: (){Get.to(Setting());},
+      //           //    child: ListTile(
+      //           //        tileColor: HexColor("#D4F1F4"),
+      //           //       title: Text('Settings'),
+      //           //       trailing: Row(
+      //           //         mainAxisSize: MainAxisSize.min,
+      //           //         children: [
+      //           //           Icon(
+      //           //             LineAwesomeIcons.angle_right,
+      //           //             size: 16,
+      //           //           )
+      //           //         ],
+      //           //       ),
                      
-                    ),
-                 ),
-                 Card(
-                   color: HexColor("#D4F1F4"),
-                   elevation: 1,
-                   child:   ListTile(
-                     tileColor: HexColor("#D4F1F4"),
-                    title: Text('Logout'),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.logout,
-                          size: 16,
-                        )
-                      ],
-                    ),
+      //           //     ),
+      //           //  ),
+      //           //  Card(
+      //           //    color: HexColor("#D4F1F4"),
+      //           //    elevation: 1,
+      //           //    child:   ListTile(
+      //           //      tileColor: HexColor("#D4F1F4"),
+      //           //     title: Text('Logout'),
+      //           //     trailing: Row(
+      //           //       mainAxisSize: MainAxisSize.min,
+      //           //       children: [
+      //           //         Icon(
+      //           //           Icons.logout,
+      //           //           size: 16,
+      //           //         )
+      //           //       ],
+      //           //     ),
                    
-                  ),
-                 )
-                //   SizedBox(height: 20,),
-                //   Padding(
-                //   padding: const EdgeInsets.only(left: 130,right: 130),
-                //   child: MaterialButton(
-                //       color: Color.fromARGB(255, 177, 19, 224),
-                //      minWidth: double.infinity,
-                //         height: 50,
-                //     shape: RoundedRectangleBorder(
-                //           side: BorderSide(
-                //             color: Color.fromARGB(255, 177, 19, 224),
-                //           ),
-                //           borderRadius: BorderRadius.circular(10),
-                //         ),
-                    
-                //     onPressed: () {
+      //           //   ),
+      //           //  )
                
-                     
-                //     },
-                    
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                     
-                      
-                //       children: [
-                //         Icon(Icons.logout, color: Colors.white,),
-                //         SizedBox(width: 5,),
-                //       Text('Logout', style: TextStyle(color: Colors.white,fontSize: 18),),
-                     
-                     
-                //     ],)
-                //   ),
-                // )
-                
               
-         ],),
-       ),
+      //    ],),
+      //  ),
         
          
            
           
         
-      ),
-    ),
-          );
+      // ),
+    );
+    
   }
 }

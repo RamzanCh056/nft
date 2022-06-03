@@ -72,7 +72,7 @@ class _NTFMarketState extends State<NTFMarket> {
           margin: EdgeInsets.all(15),
           colorText: Colors.red,
           messageText: Text(
-            "Wrong credential",
+            "",
             style: TextStyle(color: Colors.white),
           ),
           duration: Duration(seconds: 4),
@@ -215,7 +215,7 @@ class _NTFMarketState extends State<NTFMarket> {
           margin: EdgeInsets.all(15),
           colorText: Colors.red,
           messageText: Text(
-            "Wrong credential",
+            "",
             style: TextStyle(color: Colors.white),
           ),
           duration: Duration(seconds: 4),
@@ -359,12 +359,12 @@ class _NTFMarketState extends State<NTFMarket> {
                                       color: Colors.white, fontWeight: FontWeight.bold),
                                 ),
                                 SizedBox(
-                                  width: 1,
+                                  width: 3,
                                 ),
-                                Icon(
-                                  Icons.device_thermostat_rounded,
-                                  color: Colors.white,
-                                ),
+                                  Container(
+                                          height: 26,width: 25,
+                                          child: Image.network("http://nuoninev.com/wp-content/uploads/2021/10/Tether.png", fit: BoxFit.fill,)),
+                                          SizedBox(width: 3,),
                                 Text(
                                   marketData[index]['price'].toString(),
                                   style: TextStyle(

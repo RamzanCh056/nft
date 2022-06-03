@@ -96,7 +96,7 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
           margin: EdgeInsets.all(15),
           colorText: Colors.red,
           messageText: Text(
-            "Wrong credential",
+            "",
             style: TextStyle(color: Colors.white),
           ),
           duration: Duration(seconds: 4),
@@ -319,7 +319,8 @@ class _DepositWithdrawState extends State<DepositWithdraw> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-     // backgroundColor: HexColor("#D4F1F4"),
+        resizeToAvoidBottomInset: false,
+      backgroundColor: HexColor("#D4F1F4"),
       appBar: AppBar(
         title: Text("Deposit/Withdraw"),
         centerTitle: true,

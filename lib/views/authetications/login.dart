@@ -221,7 +221,7 @@ var auth="HSYE683H38S";
                           autofocus: false,
                           decoration: InputDecoration(
                             hintText: "User name",
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: Icon(Icons.person),
                             hintStyle: TextStyle(color: Colors.grey),
                             border: OutlineInputBorder(),
                             errorStyle:

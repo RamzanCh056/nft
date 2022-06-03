@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:nft_app/controller/constraints.dart';
 import 'package:nft_app/views/screens/drawer.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+
+var ab;
 
 class Referralink extends StatefulWidget {
   Referralink({Key? key}) : super(key: key);
@@ -11,10 +18,35 @@ class Referralink extends StatefulWidget {
 
 class _ReferralinkState extends State<Referralink> {
   final GlobalKey<ScaffoldState> _scaffoldKe3 = GlobalKey<ScaffoldState>();
+  Referrall() async {
+    var auth = "HSYE683H38S";
+    var response = await http.post(
+      Uri.parse(
+        'https://mining-nfts.com/api/',
+      ),
+      body: {
+        "logged": "$loginToken",
+        "auth": "$auth",
+        "refer": '',
+      },
+    );
+    var data2 = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      var status = int.parse(data2['status']);
+      if (status == 200) {
+        Referral = data2['message'];
+        print("api is hit on referral");
+      } else {
+        print(response.reasonPhrase);
+        print("api not hit on referral$data2");
+      }
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: HexColor("#D4F1F4"),
+      backgroundColor: HexColor("#D4F1F4"),
       appBar: AppBar(
         title: Text("Referral Link:"),
         centerTitle: true,
@@ -46,29 +78,39 @@ class _ReferralinkState extends State<Referralink> {
             SizedBox(
               height: 5,
             ),
-            Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: TextFormField(
-                autofocus: false,
-                decoration: InputDecoration(
-                  hintText: 'https://mining-nfts.com/invite/1533476623',
-                  fillColor: Colors.grey[300],
-                  filled: true,
-                  // suffixIcon: Icon(Icons.search),
-                  hintStyle: TextStyle(color: Colors.grey),
-                  border: OutlineInputBorder(),
-                  errorStyle: TextStyle(color: Colors.grey, fontSize: 15),
-                  enabledBorder: OutlineInputBorder(
-                    //  borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                    borderSide: BorderSide(color: Colors.grey, width: 2),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    borderSide: BorderSide(color: Colors.grey, width: 2),
-                  ),
-                ),
-                // controller:controller. emailController,
-              ),
+            FutureBuilder(
+              future: Referrall(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(0.0),
+                    child: TextFormField(
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        // enabled: false,
+                        hintText: '${Referral["url"].toString()}',
+                        fillColor: Colors.grey[300],
+                        filled: true,
+                        // suffixIcon: Icon(Icons.search),
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: OutlineInputBorder(),
+                        errorStyle: TextStyle(color: Colors.grey, fontSize: 15),
+                        enabledBorder: OutlineInputBorder(
+                          //  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                          borderSide: BorderSide(color: Colors.grey, width: 2),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide: BorderSide(color: Colors.grey, width: 2),
+                        ),
+                      ),
+                      // controller:controller. emailController,
+                    ),
+                  );
+                }
+              },
             ),
             SizedBox(
               height: 20,
@@ -159,109 +201,348 @@ class _ReferralinkState extends State<Referralink> {
                     SizedBox(
                       height: 5,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Downline one (15% of their daily profits)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
+                    Text(
+                      'Downline one (15% of their daily profits)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black54,
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    FutureBuilder(
+                      future: Referrall(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return ListView.builder(
+                            itemCount: Referral['data']['level1'].length,
+                            physics: NeverScrollableScrollPhysics(),
+
+                            // // scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              ab = Referral['data']['level1'][index]["text"]
+                                  .toString();
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          // color: Color(ab.toString().length),
+                                          ),
+                                      child: Text(
+                                        '${Referral['data']['level1'][index]["text"]}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
                     ),
                     Divider(
                       thickness: 2,
                       color: Colors.grey,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Downline two (10% of their daily profits)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Downline two (10% of their daily profits)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black54,
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    FutureBuilder(
+                      future: Referrall(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return ListView.builder(
+                            itemCount: Referral['data']['level2'].length,
+                            physics: NeverScrollableScrollPhysics(),
+
+                            // // scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              ab = Referral['data']['level2'][index]["text"]
+                                  .toString();
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          // color: Color(ab.toString().length),
+                                          ),
+                                      child: Text(
+                                        '${Referral['data']['level2'][index]["text"]}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
                     ),
                     Divider(
                       thickness: 2,
                       color: Colors.grey,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Downline three (5% of their daily profits)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Downline three (5% of their daily profits)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black54,
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    FutureBuilder(
+                      future: Referrall(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return ListView.builder(
+                            itemCount: Referral['data']['level3'].length,
+                            physics: NeverScrollableScrollPhysics(),
+
+                            // // scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              ab = Referral['data']['level3'][index]["text"]
+                                  .toString();
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          // color: Color(ab.toString().length),
+                                          ),
+                                      child: Text(
+                                        '${Referral['data']['level3'][index]["text"]}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
                     ),
                     Divider(
                       thickness: 2,
                       color: Colors.grey,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Downline four (1% of their daily profits)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Downline four (1% of their daily profits)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black54,
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    FutureBuilder(
+                      future: Referrall(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return ListView.builder(
+                            itemCount: Referral['data']['level4'].length,
+                            physics: NeverScrollableScrollPhysics(),
+
+                            // // scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              ab = Referral['data']['level4'][index]
+                                      ["colorCode"]
+                                  .toString();
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      // height: 20,
+                                      decoration: BoxDecoration(
+                                        color: Color(ab.toString().length),
+                                      ),
+                                      child: Text(
+                                        '${Referral['data']['level4'][index]["text"]}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
                     ),
                     Divider(
                       thickness: 2,
                       color: Colors.grey,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Downline five (1% of their daily profits)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Downline five (1% of their daily profits)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black54,
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    FutureBuilder(
+                      future: Referrall(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return ListView.builder(
+                            itemCount: Referral['data']['level5'].length,
+                            physics: NeverScrollableScrollPhysics(),
+
+                            // // scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              ab = Referral['data']['level5'][index]["text"]
+                                  .toString();
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          // color: Color(ab.toString().length),
+                                          ),
+                                      child: Text(
+                                        '${Referral['data']['level5'][index]["text"]}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
                     ),
                     Divider(
                       thickness: 2,
                       color: Colors.grey,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Downline six (1% of their daily profits)',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Downline six (1% of their daily profits)',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        color: Colors.black54,
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    FutureBuilder(
+                      future: Referrall(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return ListView.builder(
+                            itemCount: Referral['data']['level6'].length,
+                            physics: NeverScrollableScrollPhysics(),
+
+                            // // scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              ab = Referral['data']['level6'][index]["text"]
+                                  .toString();
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          // color: Color(ab.toString().length),
+                                          ),
+                                      child: Text(
+                                        '${Referral['data']['level6'][index]["text"]}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
                     ),
                     SizedBox(
                       height: 6,

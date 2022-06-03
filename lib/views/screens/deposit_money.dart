@@ -87,7 +87,7 @@ class _DepositmoneyState extends State<Depositmoney> {
           margin: EdgeInsets.all(15),
           colorText: Color.fromARGB(255, 177, 19, 224),
           messageText: Text(
-            "Wrong credential",
+            "",
             style: TextStyle(color: Colors.white),
           ),
           duration: Duration(seconds: 4),
