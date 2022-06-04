@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:nft_app/controller/constraints.dart';
 import 'package:nft_app/views/screens/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:shimmer/shimmer.dart';
 
 class WithdrawHistory extends StatefulWidget {
   WithdrawHistory({Key? key}) : super(key: key);
@@ -17,6 +19,12 @@ class WithdrawHistory extends StatefulWidget {
 
 class _WithdrawHistoryState extends State<WithdrawHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey1 = GlobalKey<ScaffoldState>();
+  var searchController=TextEditingController();
+  final _debouncer = Debouncer();
+  var allList = [];
+  var sortedLists = [];
+  var searching=0;
+
   WithdrawHistory() async {
     var auth = "HSYE683H38S";
     var response = await http.post(
@@ -36,13 +44,16 @@ class _WithdrawHistoryState extends State<WithdrawHistory> {
       if (status == 200) {
         withdrawhistory = data2['message'];
         print("api is hit on dashboard");
+        if(searching==0){
+          sortedLists=withdrawhistory;
+        }
       } else {
         print(response.reasonPhrase);
         print("api not hit on login$data2");
       }
     } else {}
   }
-
+   bool _enabled = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +73,23 @@ class _WithdrawHistoryState extends State<WithdrawHistory> {
                   ),
               child: TextFormField(
                 autofocus: false,
+                controller: searchController,
+                onChanged: (value){
+                  _debouncer.run(() {
+                    setState(() {
+                      searching=1;
+                      sortedLists = withdrawhistory
+                          .where(
+                            (u) =>
+                        (u['number'].toString().toLowerCase().contains(
+                          value.toLowerCase(),
+                        )),
+                      ).toList();
+                      allList = sortedLists;
+
+                    });
+                  });
+                },
                 decoration: InputDecoration(
                   fillColor: Colors.grey[300],
                   filled: true,
@@ -129,10 +157,75 @@ class _WithdrawHistoryState extends State<WithdrawHistory> {
                     future: WithdrawHistory(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: Container(
+          height: 600,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: 40.0,
+								height: 8.0,
+								color: Colors.white,
+							),
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	));
                       } else {
                         return ListView.builder(
-                          itemCount: withdrawhistory.length,
+                          itemCount: sortedLists.length,
                           physics: NeverScrollableScrollPhysics(),
                           // scrollDirection: Axis.horizontal,
 
@@ -151,20 +244,20 @@ class _WithdrawHistoryState extends State<WithdrawHistory> {
                                     children: [
                                       Expanded(
                                           child: Text(
-                                        '${withdrawhistory[index]["number"]}',
+                                        '${sortedLists[index]["number"]}',
                                       )),
                                       Expanded(
                                           child: Text(
-                                              '${withdrawhistory[index]["amount"]}')),
+                                              '${sortedLists[index]["amount"]}')),
                                       Expanded(
                                           child: Text(
-                                              '${withdrawhistory[index]["receive"]}')),
+                                              '${sortedLists[index]["receive"]}')),
                                       Expanded(
                                           child: Text(
-                                              '${withdrawhistory[index]["fee"]}')),
+                                              '${sortedLists[index]["fee"]}')),
                                       Expanded(
                                           child: Text(
-                                              '${withdrawhistory[index]["status"]}')),
+                                              '${sortedLists[index]["status"]}')),
                                     ],
                                   ),
                                 ),
@@ -183,5 +276,20 @@ class _WithdrawHistoryState extends State<WithdrawHistory> {
             ),
           ),
         ]));
+  }
+}
+class Debouncer {
+  int? milliseconds;
+  VoidCallback? action;
+  Timer? timer;
+
+  run(VoidCallback action) {
+    if (null != timer) {
+      timer!.cancel();
+    }
+    timer = Timer(
+      Duration(milliseconds: Duration.millisecondsPerSecond),
+      action,
+    );
   }
 }

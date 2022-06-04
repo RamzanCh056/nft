@@ -8,5 +8,8 @@ var marketData;
 var previousAddress;
 var Referral;
 var level;
+var  logout;
+var dashboardData1;
+var sendcodetoEmail;
 
 

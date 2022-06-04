@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:nft_app/controller/constraints.dart';
 import 'package:nft_app/views/screens/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:shimmer/shimmer.dart';
 
 class DepositHistory extends StatefulWidget {
   DepositHistory({Key? key}) : super(key: key);
@@ -15,8 +17,17 @@ class DepositHistory extends StatefulWidget {
   State<DepositHistory> createState() => _DepositHistoryState();
 }
 
+
 class _DepositHistoryState extends State<DepositHistory> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  var searchController=TextEditingController();
+  final _debouncer = Debouncer();
+
+  var allList = [];
+  var sortedLists = [];
+  var searching=0;
+
+
   DepositHistory() async {
     var auth = "HSYE683H38S";
     var response = await http.post(
@@ -36,13 +47,16 @@ class _DepositHistoryState extends State<DepositHistory> {
       if (status == 200) {
         Deposithistory = data2['message'];
         print("api is hit on dashboard");
+        if(searching==0){
+          sortedLists=Deposithistory;
+        }
       } else {
         print(response.reasonPhrase);
         print("api not hit on login$data2");
       }
     } else {}
   }
-
+    bool _enabled = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,6 +79,23 @@ class _DepositHistoryState extends State<DepositHistory> {
                   ),
               child: TextFormField(
                 autofocus: false,
+                controller: searchController,
+                onChanged: (value){
+                  _debouncer.run(() {
+                    setState(() {
+                      searching=1;
+                      sortedLists = Deposithistory
+                          .where(
+                            (u) =>
+                        (u['pay_address'].toString().toLowerCase().contains(
+                          value.toLowerCase(),
+                        )),
+                      ).toList();
+                      allList = sortedLists;
+
+                    });
+                  });
+                },
                 decoration: InputDecoration(
                   fillColor: Colors.grey[300],
                   filled: true,
@@ -132,10 +163,75 @@ class _DepositHistoryState extends State<DepositHistory> {
                     future: DepositHistory(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: Container(
+          height: 600,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: 40.0,
+								height: 8.0,
+								color: Colors.white,
+							),
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	));
                       } else {
                         return ListView.builder(
-                          itemCount: Deposithistory.length,
+                          itemCount: sortedLists.length,
                           physics: NeverScrollableScrollPhysics(),
 
                           // scrollDirection: Axis.horizontal,
@@ -152,15 +248,15 @@ class _DepositHistoryState extends State<DepositHistory> {
                                     children: [
                                       Expanded(
                                           child: Text(
-                                              '${Deposithistory[index]["pay_address"]}')),
+                                              '${sortedLists[index]["pay_address"]}')),
                                       Expanded(
                                           child: Text(
-                                              '${Deposithistory[index]["price_amount"]}')),
+                                              '${sortedLists[index]["price_amount"]}')),
                                       Expanded(child: Text('-1')),
                                       Expanded(child: Text('1')),
                                       Expanded(
                                           child: Text(
-                                              '${Deposithistory[index]["payment_status"]}')),
+                                              '${sortedLists[index]["payment_status"]}')),
                                     ],
                                   ),
                                 ),
@@ -179,5 +275,20 @@ class _DepositHistoryState extends State<DepositHistory> {
             ),
           ),
         ]));
+  }
+}
+class Debouncer {
+  int? milliseconds;
+  VoidCallback? action;
+  Timer? timer;
+
+  run(VoidCallback action) {
+    if (null != timer) {
+      timer!.cancel();
+    }
+    timer = Timer(
+      Duration(milliseconds: Duration.millisecondsPerSecond),
+      action,
+    );
   }
 }

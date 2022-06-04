@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:nft_app/controller/constraints.dart';
 
-
+import 'package:image_fade/image_fade.dart';
 import 'package:nft_app/views/screens/drawer.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:nft_app/views/screens/ntf_market.dart';
+import 'package:shimmer/shimmer.dart';
 
 class dashboard extends StatefulWidget {
   const dashboard({Key? key}) : super(key: key);
@@ -39,7 +41,7 @@ class _dashboardState extends State<dashboard> {
       }
     } else {}
   }
-
+    bool _enabled = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,36 +75,41 @@ class _dashboardState extends State<dashboard> {
                         )
                       ],
                     ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 224, 98, 247),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Buy More NFTs',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          // Text(
-                          //   '$loginToken',
-                          //   style: TextStyle(
-                          //       color: Colors.white,
-                          //       fontSize: 18,
-                          //       fontWeight: FontWeight.bold),
-                          // ),
-                        ],
+                    GestureDetector(
+                      onTap: (){
+                       // Get.to(NTFMarket());
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 224, 98, 247),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Buy More NFTs',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            // Text(
+                            //   '$loginToken',
+                            //   style: TextStyle(
+                            //       color: Colors.white,
+                            //       fontSize: 18,
+                            //       fontWeight: FontWeight.bold),
+                            // ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -114,7 +121,73 @@ class _dashboardState extends State<dashboard> {
               future: dashbord(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: Container(
+          height: 500,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: 40.0,
+								height: 8.0,
+								color: Colors.white,
+							),
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	)
+  );
                 } else {
                   return Container(
                     decoration: BoxDecoration(
@@ -176,10 +249,77 @@ class _dashboardState extends State<dashboard> {
               height: 20,
             ),
             FutureBuilder(
+
               future: dashbord(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child:Container(
+          height: 500,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: 40.0,
+								height: 8.0,
+								color: Colors.white,
+							),
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	)
+  );
                 } else {
                   return Container(
                     decoration: BoxDecoration(
@@ -244,7 +384,72 @@ class _dashboardState extends State<dashboard> {
               future: dashbord(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: Container(
+          height: 500,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: 40.0,
+								height: 8.0,
+								color: Colors.white,
+							),
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	));
                 } else {
                   return Container(
                     decoration: BoxDecoration(
@@ -311,7 +516,60 @@ class _dashboardState extends State<dashboard> {
               future: dashbord(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: Container(
+          height: 500,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+						
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	));
                 } else {
                   return Container(
                     decoration: BoxDecoration(
@@ -376,7 +634,73 @@ class _dashboardState extends State<dashboard> {
               future: dashbord(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: Container(
+          height: 500,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+							Container(
+								width: 40.0,
+								height: 8.0,
+								color: Colors.white,
+							),
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	)
+  );
                 } else {
                   return Container(
                     decoration: BoxDecoration(
@@ -441,7 +765,60 @@ class _dashboardState extends State<dashboard> {
               future: dashbord(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: Container(
+          height: 500,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+						
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	));
                 } else {
                   return Container(
                     decoration: BoxDecoration(
@@ -506,7 +883,60 @@ class _dashboardState extends State<dashboard> {
               future: dashbord(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child:Container(
+          height: 100,
+
+		width: double.infinity,
+		padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+		child: Column(
+		mainAxisSize: MainAxisSize.max,
+		children: <Widget>[
+			Expanded(
+			child: Shimmer.fromColors(
+				baseColor: Colors.grey,
+				highlightColor: Colors.grey,
+				enabled: _enabled,
+				child: ListView.builder(
+				itemBuilder: (_, __) => Padding(
+					padding: const EdgeInsets.only(bottom: 8.0),
+					child: Row(
+					crossAxisAlignment: CrossAxisAlignment.start,
+					children: [
+						Container(
+						width: 48.0,
+						height: 48.0,
+						color: Colors.white,
+						),
+						const Padding(
+						padding: EdgeInsets.symmetric(horizontal: 8.0),
+						),
+						Expanded(
+						child: Column(
+							crossAxisAlignment: CrossAxisAlignment.start,
+							children: <Widget>[
+							Container(
+								width: double.infinity,
+								height: 8.0,
+								color: Colors.white,
+							),
+							const Padding(
+								padding: EdgeInsets.symmetric(vertical: 2.0),
+							),
+						
+							],
+						),
+						)
+					],
+					),
+				),
+				itemCount: 6,
+				),
+			),
+			),
+		
+		],
+		),
+	));
                 } else {
                   return Container(
                     decoration: BoxDecoration(

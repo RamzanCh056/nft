@@ -1,16 +1,22 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:nft_app/controller/constraints.dart';
+import 'package:nft_app/views/authetications/login.dart';
 import 'package:nft_app/views/screens/all_history.dart';
 import 'package:nft_app/views/screens/deposit_history.dart';
 import 'package:nft_app/views/screens/notification.dart';
 import 'package:nft_app/views/screens/refferel_link.dart';
 import 'package:nft_app/views/screens/setting.dart';
 import 'package:nft_app/views/screens/withdraw_history.dart';
+import 'package:http/http.dart' as http;
 // import 'package:settings_ui/settings_ui.dart';
 
 class Account extends StatefulWidget {
@@ -23,6 +29,63 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
     late double height;
   late double width;
+    Logout() async {
+    var auth = "HSYE683H38S";
+    var response = await http.post(
+      Uri.parse(
+        'https://mining-nfts.com/api/',
+      ),
+      body: {
+        "logged": "$loginToken",
+        "auth": "$auth",
+        "logout": '',
+      },
+    );
+    var data2 = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      var status = int.parse(data2['status']);
+      if (status == 200) {
+        logout = data2['message'];
+        print("api is hit on dashboard");
+        Get.snackbar(
+          "",
+          "",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black,
+          borderRadius: 20,
+          margin: EdgeInsets.all(15),
+          colorText: Colors.green,
+          messageText: Text(
+            "Logout Successfully",
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(seconds: 4),
+          isDismissible: true,
+          forwardAnimationCurve: Curves.easeOutBack,
+        );
+        Get.to(Login());
+      } else {
+        print(response.reasonPhrase);
+        print("api not hit on login$data2");
+        Get.snackbar(
+          "${data2['message']}",
+          "",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black,
+          borderRadius: 20,
+          margin: EdgeInsets.all(15),
+          colorText: Colors.red,
+          messageText: Text(
+            "",
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(seconds: 4),
+          isDismissible: true,
+          forwardAnimationCurve: Curves.easeOutBack,
+        );
+      }
+    } else {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -283,11 +346,11 @@ class _AccountState extends State<Account> {
                       padding: EdgeInsets.only(left: width * 0.01),
                       child: IconButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => contact(),
-                            //     ));
+                          
+                      Logout();
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (context) => Login()));
+                    
                           },
                           icon: Icon(
                             Icons.arrow_forward_ios,

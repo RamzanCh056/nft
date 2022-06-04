@@ -42,6 +42,10 @@ dependencies:
   flutter_expanded_tile: ^0.3.6
   flutter_switch: ^0.3.2
   html: ^0.15.0
+  image_fade: ^0.6.1
+  shimmer: ^2.0.0
+  neon: ^0.1.0
+  rainbow_color: ^2.0.1
 
 
 dev_dependencies:

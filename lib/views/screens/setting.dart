@@ -22,6 +22,7 @@ class _SettingState extends State<Setting> {
   final whatsappController = TextEditingController();
   final phonenoController = TextEditingController();
   final newpasswordController = TextEditingController();
+  final securityCodeController = TextEditingController();
   final _formKey1 = GlobalKey<FormState>();
   ProfileUpdated(
     String username,
@@ -38,16 +39,16 @@ class _SettingState extends State<Setting> {
         'https://mining-nfts.com/api/',
       ),
       body: {
-        'name': username,
-        'password': password,
-        'email': email,
-        'telegram': telegram,
-        'whatsapp': whatsapp,
-        'phone': phone_number,
         'logged': '$loginToken',
         "auth": "$auth",
         "profile": '',
-        "update": ""
+        "update": "",
+        'name': username,
+        'email': email,
+        'password': password,
+        'telegram': telegram,
+        'whatsapp': whatsapp,
+        'phone': phone_number,
       },
     );
     var data2 = jsonDecode(response.body.toString());
@@ -104,7 +105,7 @@ class _SettingState extends State<Setting> {
         margin: EdgeInsets.all(15),
         colorText: Colors.red,
         messageText: Text(
-          "",
+          "Wrong Data",
           style: TextStyle(color: Colors.white),
         ),
         duration: Duration(seconds: 4),
@@ -139,23 +140,71 @@ class _SettingState extends State<Setting> {
     } else {}
   }
 
+  SendCodetoEmail() async {
+    var auth = "HSYE683H38S";
+    var response = await http.post(
+      Uri.parse(
+        'https://mining-nfts.com/api/',
+      ),
+      body: {
+        "logged": "$loginToken",
+        "auth": "$auth",
+        "profile": '',
+        "send_code": ""
+      },
+    );
+    var data2 = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      var status = int.parse(data2['status']);
+      if (status == 200) {
+        sendcodetoEmail = data2['message'];
+        Get.snackbar(
+          "${data2['message']}",
+          "",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black,
+          borderRadius: 20,
+          margin: EdgeInsets.all(15),
+          colorText: Colors.red,
+          duration: Duration(seconds: 4),
+          isDismissible: true,
+          forwardAnimationCurve: Curves.easeOutBack,
+        );
+        print("api is hit on code email");
+      } else {
+        print(response.reasonPhrase);
+        print("api not hit on email code$data2");
+        Get.snackbar(
+          "${data2['message']}",
+          "",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.black,
+          borderRadius: 20,
+          margin: EdgeInsets.all(15),
+          colorText: Colors.red,
+          messageText: Text(
+            "",
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(seconds: 4),
+          isDismissible: true,
+          forwardAnimationCurve: Curves.easeOutBack,
+        );
+      }
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: HexColor("#D4F1F4"),
-     appBar: AppBar(
-        title: Text("Settings"),
-        centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 177, 19, 224),
-      ),
+         backgroundColor: HexColor("#D4F1F4"),
       body: SingleChildScrollView(
         child: SafeArea(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 20,),
+          children: [SizedBox(height: 10,),
             Container(
-              height: 140,
+              height: 155,
               width: double.infinity,
               child: Image.asset(
                 'images/logo.png',
@@ -596,16 +645,9 @@ class _SettingState extends State<Setting> {
                 width: 20,
               ),
               MaterialButton(
-                color:     Color.fromARGB(255, 177, 19, 224),
+                color: Color.fromARGB(255, 177, 19, 224),
                 onPressed: () {
-                  ProfileUpdated(
-                      nameController.text.toString(),
-                      openingController.text.toString(),
-                      emailController.text,
-                      telegramController.toString(),
-                      whatsappController.text,
-                      phonenoController.text.toString(),
-                      newpasswordController.text.toString());
+
                   // _showMyDialog();
                   showInformationDialogtwo(context);
                 },
@@ -636,8 +678,10 @@ class _SettingState extends State<Setting> {
                   width: 20,
                 ),
                 MaterialButton(
-                  color:     Color.fromARGB(255, 177, 19, 224),
-                  onPressed: () {},
+                  color: Color.fromARGB(255, 177, 19, 224),
+                  onPressed: () {
+                    SendCodetoEmail();
+                  },
                   child: Text(
                     'Send security code to my email',
                     style: TextStyle(color: Colors.white),
@@ -699,6 +743,7 @@ class _SettingState extends State<Setting> {
                             // height: 50,/
                             child: TextFormField(
                               autofocus: false,
+                              controller: securityCodeController,
                               decoration: InputDecoration(
                                 hintText: "Security Code",
                                 // prefixIcon: Icon(Icons.email),
@@ -741,8 +786,48 @@ class _SettingState extends State<Setting> {
                     MaterialButton(
                       color: Colors.blue[300],
                       onPressed: () {
+                        if(securityCodeController.text==ProfileSetting['secretCode']){
+                          ProfileUpdated(
+                            nameController.text.toString(),
+                            newpasswordController.text.toString(),
+                            openingController.text.toString(),
+                            emailController.text,
+                            telegramController.toString(),
+                            whatsappController.text,
+                            phonenoController.text.toString(),
+
+                          );
+                          Get.snackbar(
+                            "Security Code Verified",
+                            "",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.black,
+                            borderRadius: 20,
+                            margin: EdgeInsets.all(15),
+                            colorText: Colors.green,
+                            duration: Duration(seconds: 4),
+                            isDismissible: true,
+                            forwardAnimationCurve: Curves.easeOutBack,
+                          );
+                          Navigator.pop(context);
+                        }
+                        else{
+                          Get.snackbar(
+                            "Wrong Security Code",
+                            "",
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.black,
+                            borderRadius: 20,
+                            margin: EdgeInsets.all(15),
+                            colorText: Colors.green,
+                            duration: Duration(seconds: 4),
+                            isDismissible: true,
+                            forwardAnimationCurve: Curves.easeOutBack,
+                          );
+
+                        }
                         // _showMyDialog();
-                        Navigator.pop(context);
+
                       },
                       child: Text(
                         'Verify',

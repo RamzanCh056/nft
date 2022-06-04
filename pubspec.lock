@@ -142,6 +142,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  image_fade:
+    dependency: "direct main"
+    description:
+      name: image_fade
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.1"
   js:
     dependency: transitive
     description:
@@ -184,6 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  neon:
+    dependency: "direct main"
+    description:
+      name: neon
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   path:
     dependency: transitive
     description:
@@ -191,6 +205,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  rainbow_color:
+    dependency: "direct main"
+    description:
+      name: rainbow_color
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
+  rainbow_vis:
+    dependency: transitive
+    description:
+      name: rainbow_vis
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -254,4 +289,4 @@ packages:
     version: "2.1.1"
 sdks:
   dart: ">=2.16.0-80.1.beta <3.0.0"
-  flutter: ">=2.0.1"
+  flutter: ">=2.2.3"
